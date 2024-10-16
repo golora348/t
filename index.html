@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>끝말잇기 도우미</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen">
+        <img id="loadingImage" src="" alt="Loading image" />
+        <p>Loading...</p>
+    </div>
+    
+    <div class="header" style="display: none;">
+        <img id="serverImage" src="" alt="서버 이미지"/>
+        
+        <input type="text" id="wordInput"/>
+    </div>
+
+    <div class="result" id="resultContainer"></div>
+    
+    <div class="options">
+        <div class="options-server">
+            <h3>Server: </h3>
+            <button id="koreaServer">한국</button>
+            <button id="japanServer">日本</button>
+        </div>
+
+        <div class="options-checkbox" style="display: none;">
+            <label>Word ID<input type="checkbox" id="showId" checked></label>
+            <label>Image<input type="checkbox" id="showImage" checked></label>
+            <label>Word<input type="checkbox" id="showWord" checked></label>
+            <label>Detail Text<input type="checkbox" id="showDescription" checked></label>
+            <label>Type<input type="checkbox" id="showType" checked></label>
+            <label>두음법칙(비표준)<input type="checkbox" id="applyInitialSoundRule"></label>
+            <label>無関係検索<input type="checkbox" id="hiraganaKatakanaCheckbox"></label>
+        </div>
+
+        <div class="options-load" style="display: none;">
+            <div class="PriconneShiritoriHistory">
+                <button id="loadHistory">진행 내역 불러오기</button>
+                <button id="saveHistory">진행 내역 저장하기</button>
+                <input type="file" id="fileInput" accept=".txt" style="display: none;" />
+
+            </div>
+            <div class="highlightHistory" for="highlightHistory"">
+                <label id="highlightHistoryLabel" for="highlightHistory">진행 내역 강조: </label>
+                <input type="checkbox" id="highlightHistory">
+                <label id="highlightColorLabel">강조 색: </label>
+                <input type="color" id="highlightColor" value="#ffff00">
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
