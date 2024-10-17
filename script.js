@@ -194,7 +194,7 @@ const updateServerDisplay = (server) => {
   // 입력 필드의 플레이스홀더 업데이트
   document.getElementById("wordInput").placeholder = isKoreaServer
     ? "단어를 입력하세요."
-    : "単語を入力してください.";
+    : "単語を入力してください。";
 
   // wordInput 값 초기화
   document.getElementById("wordInput").value = "";
@@ -353,6 +353,7 @@ const updateResults = () => {
   const inputWord = document.getElementById("wordInput").value.trim();
   const resultContainer = document.getElementById("resultContainer");
 
+  /* [TESTONLY]
   if (!inputWord) {
     resultContainer.innerHTML =
       currentServer === "./KR_DB.csv"
@@ -360,6 +361,7 @@ const updateResults = () => {
         : "<p class='result-message'>単語を入力してください。</p>";
     return;
   }
+  */
 
   const firstChar = inputWord.charAt(0);
   const { initial, medial, final } = splitHangul(firstChar);
@@ -525,16 +527,23 @@ const createResultTable = (results) => {
   };
 
   let table = `<table><thead><tr>`;
+
+  /* [TESTONLY]
+  // CSV Index 열 생성 (숨김 처리)
+  if (showOptions.csvIndex)
+    table += `<th style="display: none;">CSV Index</th>`;
+  */
+
+  // CSV Index 열 생성
+  table += `<th>CSV Index</th>`;
+
   if (showOptions.id) table += `<th>Word ID</th>`;
+
   if (showOptions.image) table += `<th>Image</th>`;
   if (showOptions.word) table += `<th>Word</th>`;
   if (showOptions.description) table += `<th>Detail Text</th>`;
   table += `<th>Status</th>`; // Status 열 추가
   if (showOptions.type) table += `<th>Type</th>`;
-
-  // CSV Index 열 생성하지만 숨김 처리
-  if (showOptions.csvIndex)
-    table += `<th style="display: none;">CSV Index</th>`;
 
   table += `</tr></thead><tbody>`;
 
@@ -545,7 +554,8 @@ const createResultTable = (results) => {
     const word = item[1];
     let imgSrc;
 
-    /* TEST ONLY 
+    /* [TESTONLY]
+    // imgId 데이터 유형 확인
     console.log(typeof imgId, imgId);
     console.log(`Checking imgId: ${imgId}`);
     console.log(`imgId 10126? ${imgId === 10126}`);
@@ -564,31 +574,41 @@ const createResultTable = (results) => {
     const type = currentServer === "./KR_DB.csv" ? item[2] : item[0];
 
     table += `<tr>`;
+
+    /* [TESTONLY]
+    // CSV Index 열 값 반환 (숨김 처리)
+    if (showOptions.csvIndex) {
+      const formattedIndex = (item.row + 1).toString().padStart(3, "0");
+      table += `<td class="center" style="display: none;">${formattedIndex}</td>`;
+    }
+    */
+
+    // CSV Index 열 값 반환
+    if (showOptions.csvIndex) {
+      const formattedIndex = (item.row + 1).toString().padStart(3, "0");
+      table += `<td class="center">${formattedIndex}</td>`;
+    }
     if (showOptions.id) table += `<td class="center">${wordId}</td>`;
-    table += `<td class="center">
+    if (showOptions.image)
+      table += `<td class="center">
       <img src="${imagesCache[imgSrc]?.src || ""}" alt="${word}" data-index="${
-      item.row
-    }" onclick="addWordToInput('${word}'), addToHistory(${item.row}, 'KR')">
+        item.row
+      }" onclick="addWordToInput('${word}'), addToHistory(${item.row}, 'KR')">
     </td>`;
     if (showOptions.word) table += `<td class="center">${word}</td>`;
     if (showOptions.description) table += `<td>${description}</td>`;
 
     // Status 열 Add 버튼 클릭 이벤트
     table += `<td class="center">
-  <button class="add-btn" data-index="${item.row}" onclick="addToHistory(${item.row}, 'KR')">+</button>
-  <button class="remove-btn" data-index="${item.row}" onclick="removeFromHistory(${item.row}, 'KR')">-</button>
-</td>`;
+              <button class="add-btn" data-index="${item.row}" onclick="addToHistory(${item.row}, 'KR')">+</button>
+              <button class="remove-btn" data-index="${item.row}" onclick="removeFromHistory(${item.row}, 'KR')">-</button>
+              </td>`;
+
     if (showOptions.type) {
       const typeImageSrc = getTypeImageSrc(type);
       table += `<td class="center">${
         typeImageSrc ? `<img src="${typeImageSrc}" alt="Type Image">` : ""
       }</td>`;
-    }
-
-    // CSV Index 열 생성 (화면에서는 보이지 않음)
-    if (showOptions.csvIndex) {
-      const formattedIndex = (item.row + 1).toString().padStart(3, "0");
-      table += `<td class="center" style="display: none;">${formattedIndex}</td>`;
     }
 
     table += `</tr>`;
@@ -694,8 +714,9 @@ const parseHistory = (text) => {
     }
   }
 
-  historyDataKR = Array.from(uniqueKR);
-  historyDataJP = Array.from(uniqueJP);
+  // 배열에 중복 제거된 값 저장 후 오름차순 정렬
+  historyDataKR = Array.from(uniqueKR).sort();
+  historyDataJP = Array.from(uniqueJP).sort();
 };
 
 // 결과 테이블 강조 행
@@ -708,7 +729,7 @@ const highlightRows = (highlightedIndexes) => {
   const highlightColor = document.getElementById("highlightColor").value; // 선택된 색상 가져오기
 
   rows.forEach((row) => {
-    const csvIndexCell = row.querySelector("td:last-child");
+    const csvIndexCell = row.querySelector("td:first-child");
     if (
       csvIndexCell &&
       highlightedIndexes.includes(csvIndexCell.textContent.trim()) &&
@@ -802,18 +823,22 @@ document.getElementById("highlightColor").addEventListener("input", (event) => {
 
 // "진행 내역 저장하기" 버튼 클릭 후 파일 처리
 document.getElementById("saveHistory").addEventListener("click", () => {
+  // 배열에 저장된 값 오름차순 정렬
+  historyDataKR.sort();
+  historyDataJP.sort();
+
   // 파일 내용 생성
   let fileContent = "";
   fileContent += "// [정보] KR: 한국서버, JP: 일본서버\n";
-  fileContent += "// [情報] KR: 韓国サーバー、JP: 日本サーバー\n\n";
+  fileContent += "// ［情報］KR: 韓国サーバー、JP: 日本サーバー\n\n";
 
   fileContent +=
     "// [정보] 진행 내역은 각 서버에 맞는 문자열(KR 또는 JP)의 사이값을 불러옵니다.\n";
   fileContent +=
-    "// [情報] 進行内訳は、各サーバーに合った文字列（KR または JP）の間の値を読み込みます。\n\n";
+    "// ［情報］進行内訳は、各サーバーに合った文字列（KR または JP）の間の値を読み込みます。\n\n";
 
   fileContent += "// [안내] 제작: https://github.com/IZH318\n";
-  fileContent += "// [案内] 制作: https://github.com/IZH318\n\n\n\n";
+  fileContent += "// ［案内］制作: https://github.com/IZH318\n\n\n\n";
 
   fileContent += "// DATA\n";
   fileContent += "KR\n";
