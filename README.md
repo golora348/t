@@ -134,11 +134,18 @@
    - **설명**: 이미지 드래그 방지 <BR> <BR>
 
 ### 15. **언어별 사용자 정의**
-   - **서버별 조정**: 선택된 서버(한국 또는 일본)에 따라 UI 요소 및 데이터 등이 동적으로 조정 <BR>
+   - **서버별 조정**: 선택된 서버(한국 또는 일본)에 따라 UI 요소 및 데이터 등 동적으로 조정 <BR>
 
 <BR> <BR> <BR>
 
 ## 📝 출처
+
+- **폰트**: <BR>
+  Noto Sans Korean <BR>
+  🔗 URL: https://fonts.google.com/noto/specimen/Noto+Sans+KR <BR>
+  
+  Noto Sans Japanese <BR>
+  🔗 URL: https://fonts.google.com/noto/specimen/Noto+Sans+JP <BR> <BR>
 
 - **메인 캐릭터 및 배경 이미지 리소스**:  
   株式会社Cygames © プリンセスコネクト！Re:Dive (プリコネR) Client <BR>
@@ -146,5 +153,4 @@
 - **메인 캐릭터 및 배경 이미지 리소스 추출 도구** (* 자체 제작 및 수정):  
   PRICONNE_EXTRACTION_TOOLS_Portable <BR>
   🔗 URL: https://github.com/IZH318/PRICONNE_EXTRACTION_TOOLS_Portable <BR>
-
 <BR> <BR> <BR>
