@@ -97,7 +97,8 @@ const preloadImages = () => {
 
   data.forEach((item, index) => {
     if (index > 0) {
-      const imgId = currentServer === "./KR_DB.csv" ? item[3] : item[2];
+      const imgId =
+        currentServer === "./KR_DB.csv" ? item[3] : item[2];
       loadImage(`./srt_panel_${imgId}.png`);
     }
   });
@@ -162,7 +163,7 @@ const initialize = () => {
 const initializeResults = () => {
   const resultContainer = document.getElementById("resultContainer");
   resultContainer.innerHTML =
-    "<p class='result-message'>『대격전! 끝말잇기 드래곤즈』 도우미<br>『大激戦！しりとりドラゴンズ』ヘルパー<br><br>서버를 선택하세요.<br>サーバーを選択してください。</p>";
+    "<p class='result-message'>「대격전! 끝말잇기 드래곤즈」 도우미<br>『大激戦！しりとりドラゴンズ』ヘルパー<br><br>서버를 선택하세요.<br>サーバーを選択してください。</p>";
   console.log("[SYSTEM] 메인 화면 초기화.");
   console.log("［SYSTEM］メイン画面をリセットしました。");
 };
@@ -208,7 +209,7 @@ const updateServerDisplay = (server) => {
   // 진행 내역 불러오기 버튼 표시
   document.querySelector(".options-load").style.display = "flex";
 
-  // 두음법칙(비표준) 체크박스 표시 여부 설정
+  // 두음법칙(표준) 체크박스 표시 여부 설정
   document.getElementById("applyInitialSoundRule").parentElement.style.display =
     isKoreaServer ? "block" : "none";
 
@@ -354,6 +355,7 @@ const updateResults = () => {
   const resultContainer = document.getElementById("resultContainer");
 
   /* [TESTONLY]
+  // 글자 입력 필드에 아무 글자가 없을 때 결과 테이블에 반환되는 문구
   if (!inputWord) {
     resultContainer.innerHTML =
       currentServer === "./KR_DB.csv"
@@ -374,27 +376,53 @@ const updateResults = () => {
 
   let variations = [inputWord];
 
-  // 두음법칙(비표준) 적용 (한국 서버일 때만)
+  // 두음법칙(표준) 적용 (한국 서버일 때만)
+  // 참고 자료 URL: https://www.goodwriter.or.kr/bbs/board.php?bo_table=s0405&wr_id=25
+
+  // 제5절 두음법칙
+  // 제10항 한자음 ‘녀, 뇨, 뉴, 니’가 단어 첫머리에 올 적에는, 두음 법칙에 따라 ‘여, 요, 유, 이’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
+  // 제11항 한자음 ‘랴, 려, 례, 료, 류, 리’가 단어의 첫머리에 올 적에는, 두음 법칙에 따라 ‘야, 여, 예, 요, 유, 이’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
+  // 제12항 한자음 ‘라, 래, 로, 뢰, 루, 르’가 단어의 첫머리에 올 적에는, 두음 법칙에 따라 ‘나, 내, 노, 뇌, 누, 느’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
   if (
     currentServer === "./KR_DB.csv" &&
     document.getElementById("applyInitialSoundRule").checked
   ) {
     let newInitialSounds = [];
     switch (initial) {
-      case "ㄹ":
-        newInitialSounds = ["ㄹ", "ㄴ", "ㅇ"];
-        break;
+      // 초성이 "ㄴ"일 때
       case "ㄴ":
-        newInitialSounds = ["ㄴ", "ㄹ", "ㅇ"];
+        // 중성이 ㅕ, ㅛ, ㅠ, ㅣ일 경우 초성을 "ㄴ", "ㅇ"으로 처리
+        if (["ㅕ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+          newInitialSounds = ["ㄴ", "ㅇ"];
+        }
         break;
+
+      // 초성이 "ㄹ"일 때
+      case "ㄹ":
+        // 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"일 경우 초성을 "ㄹ", "ㅇ"으로 처리
+        if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+          newInitialSounds = ["ㄹ", "ㅇ"];
+        }
+        // 중성이 "ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ"일 경우 초성을 "ㄹ", "ㄴ"으로 처리
+        else if (["ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ"].includes(medial)) {
+          newInitialSounds = ["ㄹ", "ㄴ"];
+        }
+        break;
+
+      // 초성이 "ㅇ"일 때
       case "ㅇ":
-        newInitialSounds = ["ㅇ", "ㄴ", "ㄹ"];
+        // 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"일 경우 초성을 "ㅇ", "ㄴ", "ㄹ"로 처리
+        if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+          newInitialSounds = ["ㅇ", "ㄴ", "ㄹ"];
+        }
         break;
+
+      // 위 조건에 해당하지 않는 경우 기존 값 유지
       default:
         newInitialSounds = [initial];
     }
 
-    // 두음법칙(비표준) 적용 단어 생성
+    // 두음법칙(표준) 적용 단어 생성
     variations = newInitialSounds.map((newInitial) => {
       // 새로운 초성을 기반으로 한 새로운 한글 음절을 생성
       return String.fromCharCode(
@@ -406,7 +434,7 @@ const updateResults = () => {
     });
 
     // 생성된 변형 단어를 콘솔에 출력
-    console.log("[SYSTEM] 두음법칙(비표준) 검색 대상:", variations);
+    console.log("[SYSTEM] 두음법칙(표준) 검색 대상:", variations);
   }
 
   const hiraganaKatakanaChecked = document.getElementById(
@@ -432,7 +460,9 @@ const updateResults = () => {
 
   // 현재 선택된 서버에 맞는 historyData 배열 선택
   const currentHistoryData =
-    currentServer === "./KR_DB.csv" ? historyDataKR : historyDataJP;
+    currentServer === "./KR_DB.csv"
+      ? historyDataKR
+      : historyDataJP;
 
   // 저장된 historyData를 사용하여 결과에 하이라이트 적용
   highlightRows(currentHistoryData); // 강조 표시
@@ -548,8 +578,10 @@ const createResultTable = (results) => {
   table += `</tr></thead><tbody>`;
 
   results.forEach((item) => {
-    const imgId = currentServer === "./KR_DB.csv" ? item[3] : item[2];
-    const wordId = currentServer === "./KR_DB.csv" ? item[0] : item[5];
+    const imgId =
+      currentServer === "./KR_DB.csv" ? item[3] : item[2];
+    const wordId =
+      currentServer === "./KR_DB.csv" ? item[0] : item[5];
     const description = item[4];
     const word = item[1];
     let imgSrc;
@@ -571,7 +603,8 @@ const createResultTable = (results) => {
       imgSrc = `./srt_panel_${imgId}.png`;
     }
 
-    const type = currentServer === "./KR_DB.csv" ? item[2] : item[0];
+    const type =
+      currentServer === "./KR_DB.csv" ? item[2] : item[0];
 
     table += `<tr>`;
 
@@ -702,13 +735,8 @@ const parseHistory = (text) => {
       continue;
     } else if (capturingKR && line.trim()) {
       uniqueKR.add(line.trim()); // 중복 제거
-      console.log(`[SYSTEM] 한국 서버 캡처된 인덱스: ${line.trim()}`);
     } else if (capturingJP && line.trim()) {
       uniqueJP.add(line.trim()); // 중복 제거
-      console.log(`[SYSTEM] 일본 서버 캡처된 인덱스: ${line.trim()}`);
-      console.log(
-        `［SYSTEM］日本サーバーでキャプチャされたインデックス：${line.trim()}`
-      );
     } else if (line.startsWith("JP")) {
       capturingJP = false; // JP 블록 종료
     }
