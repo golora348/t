@@ -1,1 +1,209 @@
-# t
+# Priconne Shiritori Dragons Helper <BR>
+
+(🖥 사용 화면) <BR> <BR>
+
+**프린세스 커넥트! Re:Dive** 미니게임 「**대격전! 끝말잇기 드래곤즈**」를 더욱 쉽게 즐길 수 있도록 도와줍니다. <BR>
+**プリンセスコネクト！Re:Dive (プリコネR)** のミニゲーム **『**大激戦！しりとりドラゴンズ**』**をより簡単に楽しむことができるようサポートします。 <BR> <BR>
+
+선택한 서버에 맞게 데이터를 로드하는 것 뿐만 아니라, 서버 전환(* 한국 서버, 일본 서버 데이터) 및 진행 상태 기록까지 할 수 있습니다. <BR>
+選択したサーバーに応じてデータをロードするだけでなく、サーバーの切り替え（*韓国サーバー、日本サーバーデータ）や進行状況の記録も行うことができます。 <BR> <BR>
+
+**🔗 URL: https://izh318.github.io/KarylJLPT_Lite** <BR> <BR>
+
+**이 프로젝트는 비상업적인 목적으로만 사용 가능합니다.** <BR>
+**このプロジェクトは非商業目的のみで使用可能です。** <BR>
+
+<BR> <BR> <BR>
+
+## 🔄 업데이트 내역
+### v1.0.0 (2024-10-18)
+- **기타**
+  - `Priconne Shiritori Dragons Helper` 게시
+
+<BR>
+
+<details>
+<summary>📜 이전 업데이트 내역 - 클릭하여 열기</summary>
+</details>
+
+<BR> <BR> <BR>
+
+## 🔍 웹 사이트 미리보기
+ <BR>
+(🖥 웹 사이트 첫 로딩 화면) <BR> <BR>
+
+ <BR>
+(🖥 메인 화면) <BR> <BR>
+
+ <BR>
+(🖥 한국 서버 선택 화면) <BR> <BR>
+
+ <BR>
+(🖥 한국 서버 선택 후 단어 검색 화면 (＊두음법칙(표준)) 활성화) <BR> <BR>
+
+ <BR>
+(🖥 일본 서버 선택 화면) <BR> <BR>
+
+ <BR>
+(🖥 일본 서버 선택 후 단어 검색 화면 (＊無関係検索 활성화) <BR> <BR>
+
+<BR> <BR> <BR>
+
+## 🛠️ 기능
+### 1. **동적 뷰포트 조정**
+   - **함수**: `setDynamicVh()`
+   - **설명**: CSS 사용자 정의 속성 `--vh`를 현재 창의 내부 높이에 따라 창 로드 또는 창 크기가 조정될 때 동적으로 조정 <BR> <BR>
+
+### 2. **WebP 지원 감지**
+   - **함수**: `supportsWebP()` 및 `setLoadingImage()`
+   - **설명**: 웹 브라우저에서 WebP 이미지 형식 사용 가능 판단 (＊ WebP가 지원할 때 `*.webp` 이미지 표시, 지원하지 않을 경우 `*.gif` 이미지로 대체) <BR> <BR>
+
+### 3. **CSV 데이터 로딩**
+   - **함수**: `loadData(server)`
+   - **설명**: CSV 데이터 로드 후 구조화된 형식으로 파싱 <BR> <BR>
+
+### 4. **CSV 파싱**
+   - **함수**: `parseCSV(text)`
+   - **설명**: CSV 텍스트를 한 행씩 파싱하며, 인용된 필드와 쉼표를 처리하고 각 줄에 대한 항목 배열 반환 <BR> <BR>
+
+### 5. **이미지 로딩**
+   - **함수**: `preloadImages()`, `loadImage(src)`
+   - **설명**: 필요 이미지 로드 <BR> <BR>
+
+### 6. **서버 선택 및 데이터 전환**
+   - **함수**: `updateServerDisplay(server)`
+   - **설명**: 한국 서버 및 일본 서버 간의 전환을 동적으로 수행하며, 적절한 데이터를 로드하고 UI에 올바른 데이터 업데이트 <BR> <BR>
+
+### 7. **한국어 두음법칙 (＊ 두음법칙(표준) 체크박스 체크 시 활성화)**
+본 코드에 적용된 규칙은 다음과 같음: <br>
+**🔗 참고 자료 URL: https://www.goodwriter.or.kr/bbs/board.php?bo_table=s0405&wr_id=25**
+
+#### 제5절 두음법칙
+- **제10항**: 한자음 ‘녀, 뇨, 뉴, 니’가 단어 첫머리에 올 적에는, 두음법칙에 따라 ‘여, 요, 유, 이’로 적는다. (ㄱ을 취하고, ㄴ을 버림.)
+- **제11항**: 한자음 ‘랴, 려, 례, 료, 류, 리’가 단어의 첫머리에 올 적에는, 두음법칙에 따라 ‘야, 여, 예, 요, 유, 이’로 적는다. (ㄱ을 취하고, ㄴ을 버림.)
+- **제12항**: 한자음 ‘라, 래, 로, 뢰, 루, 르’가 단어의 첫머리에 올 적에는, 두음법칙에 따라 ‘나, 내, 노, 뇌, 누, 느’로 적는다. (ㄱ을 취하고, ㄴ을 버림.) <br> <br>
+
+- **첫 글자의 초성이 "ㄴ"인 경우**:
+  - 첫 글자의 중성이 "ㅕ", "ㅛ", "ㅠ", "ㅣ" 중 하나일 때 첫 글자의 초성은 "ㄴ" 또는 "ㅇ"으로 처리
+  - **예**: "녀" → "여"
+
+- **첫 글자의 초성이 "ㄹ"인 경우**:
+  - 첫 글자의 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ" 중 하나일 때 첫 글자의 초성은 "ㄹ" 또는 "ㅇ"으로 처리
+  - **예**: "려" → "여"
+  - 첫 글자의 중성이 "ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ" 중 하나일 때 첫 글자의 초성은 "ㄹ" 또는 "ㄴ"으로 처리
+  - **예**: "라" → "나"
+
+- **첫 글자의 초성이 "ㅇ"인 경우**:
+  - 첫 글자의 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ" 중 하나일 때 첫 글자의 초성은 "ㅇ", "ㄴ", "ㄹ"으로 처리
+  - **예**: "야" → "냐", "랴" <br> <br>
+
+`switch` 문을 사용하여 초성(`initial`)을 확인한 후 중성(`medial`)에 따라 단어를 생성하고 배열(`newInitialSounds`)에 저장
+
+```javascript
+switch (initial) {
+  case "ㄴ":
+    if (["ㅕ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+      newInitialSounds = ["ㄴ", "ㅇ"];
+    }
+    break;
+  case "ㄹ":
+    if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+      newInitialSounds = ["ㄹ", "ㅇ"];
+    } else if (["ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ"].includes(medial)) {
+      newInitialSounds = ["ㄹ", "ㄴ"];
+    }
+    break;
+  case "ㅇ":
+    if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
+      newInitialSounds = ["ㅇ", "ㄴ", "ㄹ"];
+    }
+    break;
+  default:
+    newInitialSounds = [initial];
+}
+```
+
+### 8. **히라가나/가타카나 정규화 (일본어)**
+   - **함수**: `normalizeHiraganaKatakana(word)`
+   - **설명**: 일본어 히라가나와 가타카나를 정규화하여 두 형태 간 일관된 검색 처리 <BR> <BR>
+
+### 9. **단어 입력 필드에 할당**
+   - **함수**: `addWordToInput(word)`
+   - **설명**: 단어의 마지막 문자를 단어 입력 필드에 할당
+   - **구현**:
+     - 단어의 마지막 문자 추출
+     - 현재 서버가 한국 서버인 경우 마지막 문자 할당
+     - 현재 서버가 일본 서버인 경우 조건 확인:
+       - 마지막 문자가 작은 일본어 문자(예: ぁ, ぃ)인 경우 마지막 두 문자 할당
+       - 마지막 문자가 "ー" (장음 기호)인 경우 마지막에서 두 번째 문자 할당
+   - **코드**:
+   ```javascript
+   function addWordToInput(word) {
+     const inputField = document.getElementById("wordInput");
+     console.log(`[SYSTEM] 단어（単語）: ${word}`);
+
+     const wordLastChar = word.slice(-1);
+     let valueToAssign = wordLastChar; // 기본값으로 마지막 글자 할당
+
+     if (currentServer === "./KR_DB.csv") {
+       console.log(`[SYSTEM] 한국어 처리: 마지막 글자 "${valueToAssign}" 추가`);
+     } else {
+       const smallJapaneseChars = [
+         "ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "っ", "ゃ", "ゅ", "ょ", "ゎ",
+         "ァ", "ィ", "ゥ", "ェ", "ォ", "ッ", "ャ", "ュ", "ョ", "ヮ",
+       ];
+
+       if (smallJapaneseChars.includes(wordLastChar)) {
+         valueToAssign = word.slice(-2);
+         console.log(`[SYSTEM] 작은 글
+
+자 포함: 마지막 두 글자 "${valueToAssign}" 추가`);
+       } else if (wordLastChar === "ー") {
+         valueToAssign = word.charAt(word.length - 2);
+         console.log(`[SYSTEM] 마지막 글자가 "ー"이므로 마지막에서 두 번째 글자 "${valueToAssign}" 추가`);
+       } else {
+         console.log(`[SYSTEM] 작은 글자 미포함: 마지막 글자 "${valueToAssign}" 추가`);
+       }
+     }
+
+     inputField.value = valueToAssign; // 최종 값 할당
+     inputField.focus(); // 입력란에 포커스
+     updateResults(); // 결과 업데이트
+   }
+   ```
+
+### 10. **실시간 검색 및 결과 업데이트**
+   - **함수**: `updateResults()`
+   - **설명**: 사용자의 입력에 따라 결과 업데이트 <BR> <BR>
+
+### 11. **기록 관리**
+   - **함수**: `addToHistory(index)`, `removeFromHistory(index)`, `highlightRows()`, `parseHistory(text)`
+   - **설명**: 사용자가 게임 진행 내역을 저장하고 로드할 수 있으며, 찾은 단어를 쉽게 참조할 수 있도록 강조 표시 (* 진행 상황은 오름차순으로 `*.txt` 파일에 저장 및 로드) <BR> <BR>
+
+### 12. **디스플레이 사용자 정의 옵션**
+   - **함수**: `createResultTable(results)`
+   - **설명**: 사용자 선택 옵션에 따라 결과 테이블 구축(예: Word ID 표시, Image 표시 등) 및 진행 내역 기록 추가, 제거 <BR> <BR>
+
+### 13. **로딩 화면**
+   - **함수**: `hideLoadingScreen()`
+   - **설명**: 모든 데이터가 완전히 로드되면 로딩 화면 숨김 처리 <BR> <BR>
+
+### 14. **이미지 드래그 방지**
+   - **이벤트 리스너**: `document.addEventListener('dragstart', ...)`
+   - **설명**: 이미지 드래그 방지 <BR> <BR>
+
+### 15. **언어별 사용자 정의**
+   - **서버별 조정**: 선택된 서버(한국 또는 일본)에 따라 UI 요소 및 데이터 등이 동적으로 조정 <BR>
+
+<BR> <BR> <BR>
+
+## 📝 출처
+
+- **메인 캐릭터 및 배경 이미지 리소스**:  
+  株式会社Cygames © プリンセスコネクト！Re:Dive (プリコネR) Client <BR>
+
+- **메인 캐릭터 및 배경 이미지 리소스 추출 도구** (* 자체 제작 및 수정):  
+  PRICONNE_EXTRACTION_TOOLS_Portable <BR>
+  🔗 URL: https://github.com/IZH318/PRICONNE_EXTRACTION_TOOLS_Portable <BR>
+
+<BR> <BR> <BR>
