@@ -97,8 +97,7 @@ const preloadImages = () => {
 
   data.forEach((item, index) => {
     if (index > 0) {
-      const imgId =
-        currentServer === "./KR_DB.csv" ? item[3] : item[2];
+      const imgId = currentServer === "./KR_DB.csv" ? item[3] : item[2];
       loadImage(`./srt_panel_${imgId}.png`);
     }
   });
@@ -377,12 +376,6 @@ const updateResults = () => {
   let variations = [inputWord];
 
   // 두음법칙(표준) 적용 (한국 서버일 때만)
-  // 참고 자료 URL: https://www.goodwriter.or.kr/bbs/board.php?bo_table=s0405&wr_id=25
-
-  // 제5절 두음법칙
-  // 제10항 한자음 ‘녀, 뇨, 뉴, 니’가 단어 첫머리에 올 적에는, 두음 법칙에 따라 ‘여, 요, 유, 이’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
-  // 제11항 한자음 ‘랴, 려, 례, 료, 류, 리’가 단어의 첫머리에 올 적에는, 두음 법칙에 따라 ‘야, 여, 예, 요, 유, 이’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
-  // 제12항 한자음 ‘라, 래, 로, 뢰, 루, 르’가 단어의 첫머리에 올 적에는, 두음 법칙에 따라 ‘나, 내, 노, 뇌, 누, 느’로 적는다.(ㄱ을 취하고, ㄴ을 버림.)
   if (
     currentServer === "./KR_DB.csv" &&
     document.getElementById("applyInitialSoundRule").checked
@@ -391,30 +384,17 @@ const updateResults = () => {
     switch (initial) {
       // 초성이 "ㄴ"일 때
       case "ㄴ":
-        // 중성이 ㅕ, ㅛ, ㅠ, ㅣ일 경우 초성을 "ㄴ", "ㅇ"으로 처리
-        if (["ㅕ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
-          newInitialSounds = ["ㄴ", "ㅇ"];
-        }
+        newInitialSounds = ["ㄴ", "ㅇ"];
         break;
 
       // 초성이 "ㄹ"일 때
       case "ㄹ":
-        // 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"일 경우 초성을 "ㄹ", "ㅇ"으로 처리
-        if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
-          newInitialSounds = ["ㄹ", "ㅇ"];
-        }
-        // 중성이 "ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ"일 경우 초성을 "ㄹ", "ㄴ"으로 처리
-        else if (["ㅏ", "ㅐ", "ㅗ", "ㅚ", "ㅜ", "ㅡ"].includes(medial)) {
-          newInitialSounds = ["ㄹ", "ㄴ"];
-        }
+        newInitialSounds = ["ㄹ", "ㄴ", "ㅇ"];
         break;
 
       // 초성이 "ㅇ"일 때
       case "ㅇ":
-        // 중성이 "ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"일 경우 초성을 "ㅇ", "ㄴ", "ㄹ"로 처리
-        if (["ㅑ", "ㅕ", "ㅖ", "ㅛ", "ㅠ", "ㅣ"].includes(medial)) {
-          newInitialSounds = ["ㅇ", "ㄴ", "ㄹ"];
-        }
+        newInitialSounds = ["ㅇ", "ㄴ", "ㄹ"];
         break;
 
       // 위 조건에 해당하지 않는 경우 기존 값 유지
@@ -460,9 +440,7 @@ const updateResults = () => {
 
   // 현재 선택된 서버에 맞는 historyData 배열 선택
   const currentHistoryData =
-    currentServer === "./KR_DB.csv"
-      ? historyDataKR
-      : historyDataJP;
+    currentServer === "./KR_DB.csv" ? historyDataKR : historyDataJP;
 
   // 저장된 historyData를 사용하여 결과에 하이라이트 적용
   highlightRows(currentHistoryData); // 강조 표시
@@ -578,10 +556,8 @@ const createResultTable = (results) => {
   table += `</tr></thead><tbody>`;
 
   results.forEach((item) => {
-    const imgId =
-      currentServer === "./KR_DB.csv" ? item[3] : item[2];
-    const wordId =
-      currentServer === "./KR_DB.csv" ? item[0] : item[5];
+    const imgId = currentServer === "./KR_DB.csv" ? item[3] : item[2];
+    const wordId = currentServer === "./KR_DB.csv" ? item[0] : item[5];
     const description = item[4];
     const word = item[1];
     let imgSrc;
@@ -603,8 +579,7 @@ const createResultTable = (results) => {
       imgSrc = `./srt_panel_${imgId}.png`;
     }
 
-    const type =
-      currentServer === "./KR_DB.csv" ? item[2] : item[0];
+    const type = currentServer === "./KR_DB.csv" ? item[2] : item[0];
 
     table += `<tr>`;
 
